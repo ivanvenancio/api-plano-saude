@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     use HasFactory;
+    protected $fillable = ['nome','email','data_nascimento','telefone','estado','cidade'];
+
 
     public function planos()
     {

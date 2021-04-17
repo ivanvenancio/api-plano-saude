@@ -17,15 +17,6 @@ class PlanoController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,17 +36,6 @@ class PlanoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Plano $plano)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Plano  $plano
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Plano $plano)
     {
         //
     }
