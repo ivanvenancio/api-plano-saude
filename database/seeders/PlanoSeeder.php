@@ -14,7 +14,7 @@ class PlanoSeeder extends Seeder
      */
     public function run()
     {
-        // Insere o periodo de Fev/21 para efetuar os teste em dev.
+
         DB::table('planos')->insert([
             'nome' => 'Free',
             'valor' => 0,

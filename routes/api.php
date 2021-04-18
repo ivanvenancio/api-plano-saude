@@ -20,5 +20,12 @@ use Illuminate\Support\Facades\Route;
 // Route::prefix('v1')->group(function(){
 
 // });
+Route::post('login', 'AuthController@login')->name('login');
+Route::middleware(['apiJWT'])->group(function () {
+    Route::get('clientes','ClienteController@index')->name('cliente.index');
+    Route::post('clientes','ClienteController@store')->name('cliente.store');
+    Route::put('clientes/{Cliente}','ClienteController@update')->name('cliente.update');
+    Route::delete('clientes/{Cliente}','ClienteController@destroy')->name('cliente.delete');
+    Route::get('clientes/{Cliente}','ClienteController@show')->name('cliente.show');
+});
 
-Route::get('clientes','ClienteController@index');

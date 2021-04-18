@@ -28,7 +28,15 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $cliente = Cliente::create($data);
+
+        return response()->json(
+            ['data' => [
+                'msg' => 'Cliente criado com sucesso',
+                'cliente' => $cliente
+                ]
+            ], 201);
     }
 
     /**
@@ -37,9 +45,22 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show($id)
     {
-        //
+
+        $cliente = Cliente::find($id);
+
+        if(!$cliente){
+            return response()->json(
+                ['data' => [
+                    'error' => 'Cliente não encontrado'
+                    ]
+                ]
+                , 404);
+        }
+
+        // return new ClienteResource($cliente);
+        return $cliente;
     }
 
 
@@ -50,9 +71,23 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request,  $id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $data = $request->all();
+
+        if(!$cliente){
+            return response()->json(
+                ['data' => [
+                    'error' => 'Cliente não encontrado'
+                    ]
+                ]
+                , 404);
+        }
+
+        $cliente->update($data);
+        // return new ClienteResource($cliente);
+        return $cliente;
     }
 
     /**
@@ -61,8 +96,23 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        if(!$cliente){
+            return response()->json(
+                ['data' => [
+                    'error' => 'Cliente não encontrado'
+                    ]
+                ]
+                , 404);
+        }
+        $cliente->planos()->detach();
+        $cliente->delete();
+        return response()->json(
+            ['data' => [
+                'msg' => 'Cliente removido com sucesso'
+                ]
+            ], 200);
     }
 }
