@@ -27,5 +27,6 @@ Route::middleware(['apiJWT'])->group(function () {
     Route::put('clientes/{Cliente}','ClienteController@update')->name('cliente.update');
     Route::delete('clientes/{Cliente}','ClienteController@destroy')->name('cliente.delete');
     Route::get('clientes/{Cliente}','ClienteController@show')->name('cliente.show');
+    Route::post('cliente/plano','ClienteController@contrataPlano')->name('cliente.contrata_plano');
 });
 

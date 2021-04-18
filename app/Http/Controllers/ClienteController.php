@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Plano;
 use Illuminate\Http\Request;
 use App\Validators\ClienteValidator;
 
@@ -42,13 +43,7 @@ class ClienteController extends Controller
             ->passes('create');
 
         if(!$validacao){
-            return response()->json(
-                ['data' => [
-                    'msg' => $this->baseValidator->errorsBag()
-                    ]
-                ], 201);
-
-
+            return $this->retornoApi($this->baseValidator->errorsBag(),201);
         }
 
         $cliente = Cliente::create($data);
@@ -73,12 +68,7 @@ class ClienteController extends Controller
         $cliente = Cliente::find($id);
 
         if(!$cliente){
-            return response()->json(
-                ['data' => [
-                    'error' => 'Cliente não encontrado'
-                    ]
-                ]
-                , 404);
+            return $this->retornoApi('Cliente não encontrado',404);
         }
 
         // return new ClienteResource($cliente);
@@ -99,12 +89,7 @@ class ClienteController extends Controller
         $data = $request->all();
 
         if(!$cliente){
-            return response()->json(
-                ['data' => [
-                    'error' => 'Cliente não encontrado'
-                    ]
-                ]
-                , 404);
+            return $this->retornoApi('Cliente não encontrado',404);
         }
         // Valida os dados
         $validacao = $this->baseValidator->with($data)
@@ -114,17 +99,11 @@ class ClienteController extends Controller
 
 
         if(!$validacao){
-            return response()->json(
-                ['data' => [
-                    'msg' => $this->baseValidator->errorsBag()
-                    ]
-                ], 201);
-
-
+            return $this->retornoApi($this->baseValidator->errorsBag(),201);
         }
 
         $cliente->update($data);
-        // return new ClienteResource($cliente);
+
         return $cliente;
     }
 
@@ -137,20 +116,74 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         $cliente = Cliente::find($id);
+
         if(!$cliente){
-            return response()->json(
-                ['data' => [
-                    'error' => 'Cliente não encontrado'
-                    ]
-                ]
-                , 404);
+            return $this->retornoApi('Cliente não encontrado',404);
         }
-        $cliente->planos()->detach();
-        $cliente->delete();
+
+        if($this->validaExclusao($cliente)){
+
+            $cliente->planos()->detach();
+            $cliente->delete();
+            return $this->retornoApi('Cliente removido com sucesso',200);
+        }else{
+            return $this->retornoApi('Cliente do São Paulo do Plano Free não podem ser deletados',201);
+        }
+
+    }
+
+    private function validaExclusao($cliente)
+    {
+        $validacao = 0;
+
+        //Valida Plano
+        $teste1 = $cliente->belongsToMany(Plano::class)
+        ->wherePivot('plano_id', 1)
+        ->get();
+
+        if($teste1->count()) $validacao++;
+
+        //Valida Estado
+        $teste2 = $cliente->estado == 'São Paulo' ? 1 : 0;
+
+        if($teste2) $validacao++;
+
+        if($validacao == 2){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function contrataPlano(Request $request)
+    {
+        $cliente = Cliente::find($request->cliente);
+        $plano = Plano::find($request->plano);
+        if(!$plano) {
+            return $this->retornoApi('Plano nao encontrado',404);
+        }
+
+        if(!$cliente) {
+            return $this->retornoApi('Cliente nao encontrado',404);
+        }
+
+        //Contrata plano
+        $contratado = $cliente->planos()->syncWithoutDetaching([$plano->id]);
+
+        if($contratado['attached']){
+            return $this->retornoApi('Plano contratado com sucesso',200);
+        }else{
+            return $this->retornoApi('Cliente já tem plano contratado',200);
+        }
+
+    }
+
+    private function retornoApi($msg,$cod)
+    {
         return response()->json(
             ['data' => [
-                'msg' => 'Cliente removido com sucesso'
+                'msg' => $msg
                 ]
-            ], 200);
+            ], $cod);
     }
 }
