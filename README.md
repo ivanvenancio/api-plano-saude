@@ -28,30 +28,45 @@ $ docker-compose exec app bash
 ```
 
 ### Baixar dependencias do projeto  e fazer as demais configurações dentro da instância
-## Baixar dependencias
+#### Baixar dependencias
 ```sh
-$ composer update
+$ composer install
 ```
-## Copiar o .env
+#### Copiar o .env
 ```sh
 $ cp .env.example .env
 ```
-as configurações de banco de dados já estão setadas
+caso necessite, mas normalmente  o composer já copia o .env, no .env.example já tem as configurações de banco, chaves (APP_KEY e JWT_SECRET).
 
-## Gerar a key
+#### Gerar as key
+Caso queira mudar no .env copiada já tem as key 
 ```sh
 $ php artisan key:generate
 ```
+```sh
+$ php artisan jwt:secret
+```
 
-## Permissões (se tiver com problema de permissão na storage)
+#### Permissões (se tiver com problema de permissão na storage)
 
 ```sh
 $ chmod 777 -R storage
 ``` 
 
-## Rodar as tabelas do banco de dados
+#### Rodar as tabelas do banco de dados
 Comando vai criar as tabelas e dar uma carga, caso não queira, comentar a chamada dos seeders nos migrates (CreatePlanosTable, CreateClientePlanoTable)
 
 ```sh
-$ php artisan migrate --seed
+$ php artisan migrate
 ```
+## Docuumentação
+### URLS do projeto
+URL Base: http://localhost:9090/api
+URL phpMyAdmin: http://localhost:9797
+
+### Autenticação
+Foi usada a autenticação com a lib [wt-auth](https://jwt-auth.readthedocs.io/en/develop/)
+
+### Endpoints
+L
+
