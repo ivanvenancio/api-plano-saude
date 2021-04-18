@@ -74,11 +74,11 @@ Todos os endpoints precisam de autenticação com excessão do login
 #### Login
 Usuario de Teste para logar e pegar o token Bearer
 
-$ usuário = user@user.com
+usuário = user@user.com
 
-$ senha = 123mudar
+senha = 123mudar
 
-$ endpoint = http://localhost:9090/api/login
+endpoint = http://localhost:9090/api/login
 
 $ POST
 ```sh
@@ -88,19 +88,19 @@ $ POST
 }
 ```
 #### Todos os clientes
-$ endpoint = http://localhost:9090/api/clientes
+endpoint = http://localhost:9090/api/clientes
 
-$ GET
+GET
 
 #### Busca cliente
-$ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
 
-$ GET
+GET
 
 #### Criar novo cliente
-$ endpoint = http://localhost:9090/api/clientes
+endpoint = http://localhost:9090/api/clientes
 
-$ POST
+POST
 
 ```sh
 {
@@ -114,9 +114,9 @@ $ POST
 ```
 
 #### Atualizar cliente
-$ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
 
-$ PUT
+PUT
 
 ```sh
 {
@@ -125,14 +125,14 @@ $ PUT
 ```
 
 #### Deletar cliente
-$ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
 
-$ DELETE
+DELETE
 
 #### Contratar Plano
-$ endpoint = http://localhost:9090/api/cliente/plano
+endpoint = http://localhost:9090/api/cliente/plano
 
-$ POST
+POST
 ```sh
 {
 	"plano" : 1,
