@@ -61,12 +61,66 @@ $ php artisan migrate
 ```
 ## Docuumentação
 ### URLS do projeto
-URL Base: http://localhost:9090/api
+$ URL Base: http://localhost:9090/api
 URL phpMyAdmin: http://localhost:9797
 
 ### Autenticação
-Foi usada a autenticação com a lib [wt-auth](https://jwt-auth.readthedocs.io/en/develop/)
+Foi usada a autenticação com a lib [jwt-auth](https://jwt-auth.readthedocs.io/en/develop/)
 
 ### Endpoints
-L
+Todos os endpoints precisam de autenticação com excessão do login
+#### Login
+Usuario de Teste para logar e pegar o token Bearer
+$ usuário = user@user.com
+$ senha = 123mudar
+$ endpoint = http://localhost:9090/api/login
+$ POST
+```sh
+{
+	"email" : "user@user.com",
+	"password" : "123mudar"
+}
+```
+#### Todos os clientes
+$ endpoint = http://localhost:9090/api/clientes
+$ GET
 
+#### Busca cliente
+$ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+$ GET
+
+#### Criar novo cliente
+$ endpoint = http://localhost:9090/api/clientes
+$ POST
+```sh
+{
+	"nome" : "Usuário Teste",
+	"data_nascimento" : "1998-05-19",
+	"email" : "teste@teste.com.br",
+	"telefone" : "119456456123",
+	"estado" : "São Paulo",
+	"cidade" : "São Paulo"
+}
+```
+
+#### Atualizar cliente
+$ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+$ PUT
+```sh
+{
+	"telefone" : "11456789123"
+}
+```
+
+#### Deletar cliente
+$ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+$ DELETE
+
+#### Contratar Plano
+$ endpoint = http://localhost:9090/api/cliente/plano
+$ POST
+```sh
+{
+	"plano" : 1,
+	"cliente" : 4
+}
