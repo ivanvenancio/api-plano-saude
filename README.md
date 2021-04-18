@@ -61,7 +61,8 @@ $ php artisan migrate
 ```
 ## Docuumentação
 ### URLS do projeto
-$ URL Base: http://localhost:9090/api
+URL Base: http://localhost:9090/api
+
 URL phpMyAdmin: http://localhost:9797
 
 ### Autenticação
@@ -69,11 +70,16 @@ Foi usada a autenticação com a lib [jwt-auth](https://jwt-auth.readthedocs.io/
 
 ### Endpoints
 Todos os endpoints precisam de autenticação com excessão do login
+
 #### Login
 Usuario de Teste para logar e pegar o token Bearer
+
 $ usuário = user@user.com
+
 $ senha = 123mudar
+
 $ endpoint = http://localhost:9090/api/login
+
 $ POST
 ```sh
 {
@@ -83,15 +89,19 @@ $ POST
 ```
 #### Todos os clientes
 $ endpoint = http://localhost:9090/api/clientes
+
 $ GET
 
 #### Busca cliente
 $ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+
 $ GET
 
 #### Criar novo cliente
 $ endpoint = http://localhost:9090/api/clientes
+
 $ POST
+
 ```sh
 {
 	"nome" : "Usuário Teste",
@@ -105,7 +115,9 @@ $ POST
 
 #### Atualizar cliente
 $ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+
 $ PUT
+
 ```sh
 {
 	"telefone" : "11456789123"
@@ -114,10 +126,12 @@ $ PUT
 
 #### Deletar cliente
 $ endpoint = http://localhost:9090/api/clientes/{{cliente_id}}
+
 $ DELETE
 
 #### Contratar Plano
 $ endpoint = http://localhost:9090/api/cliente/plano
+
 $ POST
 ```sh
 {
