@@ -65,6 +65,10 @@ URL Base: http://localhost:9090/api
 
 URL phpMyAdmin: http://localhost:9797
 
+usuário BD = app_user
+
+senha BD = 1q2w3e
+
 ### Autenticação
 Foi usada a autenticação com a lib [jwt-auth](https://jwt-auth.readthedocs.io/en/develop/)
 
