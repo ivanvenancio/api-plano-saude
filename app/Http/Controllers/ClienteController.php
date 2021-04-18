@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use App\Validators\ClienteValidator;
 
 class ClienteController extends Controller
 {
+    protected $baseValidator;
+
+    public function __construct(ClienteValidator $baseValidator)
+    {
+       $this->baseValidator = $baseValidator;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,6 +36,21 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        // Valida os dados
+        $validacao = $this->baseValidator->with($data)
+            ->withCreateRules()
+            ->passes('create');
+
+        if(!$validacao){
+            return response()->json(
+                ['data' => [
+                    'msg' => $this->baseValidator->errorsBag()
+                    ]
+                ], 201);
+
+
+        }
+
         $cliente = Cliente::create($data);
 
         return response()->json(
@@ -83,6 +105,22 @@ class ClienteController extends Controller
                     ]
                 ]
                 , 404);
+        }
+        // Valida os dados
+        $validacao = $this->baseValidator->with($data)
+            ->setId($id)
+            ->withUpdateRules()
+            ->passes('update');
+
+
+        if(!$validacao){
+            return response()->json(
+                ['data' => [
+                    'msg' => $this->baseValidator->errorsBag()
+                    ]
+                ], 201);
+
+
         }
 
         $cliente->update($data);
