@@ -22,7 +22,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $cliente = Cliente::all();
+        $cliente = Cliente::paginate();
         return response()->json($cliente);
 
     }
